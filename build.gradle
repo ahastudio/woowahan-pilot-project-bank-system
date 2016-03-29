@@ -1,3 +1,6 @@
+def javaVersion = '1.8'
+def projects = [project(':site')]
+
 wrapper.gradleVersion = '2.12'
 
 buildscript {
@@ -6,7 +9,11 @@ buildscript {
     }
 
     repositories {
-        mavenCentral()
+        jcenter()
+
+        maven {
+            url "http://repo.spring.io/libs-snapshot"
+        }
     }
 
     dependencies {
@@ -14,4 +21,14 @@ buildscript {
     }
 }
 
-apply plugin: 'spring-boot'
+configure(projects) {
+    apply plugin: 'java'
+    apply plugin: 'spring-boot'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        jcenter()
+    }
+}
